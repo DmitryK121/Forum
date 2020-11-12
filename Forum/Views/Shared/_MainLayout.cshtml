@@ -3,20 +3,25 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" asp-href-include="~/lib/bootstrap/dist/**/*.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <title>_MainLayout</title>
 </head>
 <body>
-    <div class="text-md-center">
+    <div class="container-sm">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            <a class="navbar-brand" href="#">Navbar2</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" 
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a asp-controller="Home" asp-action="Index" class="nav-link active">Home</a>
+                    <a asp-controller="Message" asp-action="List" class="nav-link ">Messages</a>
+                    <a asp-controller="Home" asp-action="ThemePosts" class="nav-link">Theme Posts</a>
+                    <a asp-controller="Home" asp-action="CleanPage" class="nav-link">Clean Page</a>
                 </div>
             </div>
         </nav>

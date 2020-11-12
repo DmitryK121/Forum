@@ -1,0 +1,59 @@
+﻿@model PostsViewModel
+
+@if (Model == null) {
+    @($"null model")
+} else {
+    @foreach (Post post in Model.Theme.Posts) {
+        <div class="card m-3">
+            <div class="card-header">
+                <h5 class="text-left">Theme:</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">@post.Content</p>
+            </div>
+            <div class="card-footer">
+                <form asp-action="DeleteMessage" method="post" class="text-right">
+                    <div class="text-left">
+                        Message id: @post.Id  |   Time: @post.CreatedTime
+@*                        <button asp-action="DeleteMessage" asp-route-messageId="@post." type="submit" class="btn btn-danger float-right">
+                                Delete
+                        </button>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+}
+
+<div class="text-center m-3">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPostModal">
+        Add Post
+    </button>
+
+    <!-- Modal -->
+    <form asp-action="AddPost" asp-route-themeId="@Model.Theme.Id">
+       
+        <div class="modal fade" id="addPostModal" tabindex="-1" aria-labelledby="addPostModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPostModal">Post new message2</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Post</label>
+                        <textarea asp-for="newPost.Content" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
