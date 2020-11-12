@@ -17,5 +17,8 @@ namespace Forum.Controllers {
             //return RedirectToAction(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
             return View(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
         }
+        public IActionResult DeletePost(int postId, int themeId) {
+            return RedirectToAction(nameof(Posts));
+        }
     }
 }
