@@ -18,7 +18,12 @@ namespace Forum.Controllers {
             return View(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
         }
         public IActionResult DeletePost(int postId, int themeId) {
-            return RedirectToAction(nameof(Posts));
+            themeRepository.DeletePost(postId, themeId);
+            return View(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
+        }
+        public IActionResult DropPosts(int themeId) {
+            themeRepository.DropPosts(themeId);
+            return View(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
         }
     }
 }

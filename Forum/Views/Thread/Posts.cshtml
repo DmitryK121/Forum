@@ -15,9 +15,12 @@
                 <form asp-action="DeleteMessage" method="post" class="text-right">
                     <div class="text-left">
                         Message id: @post.Id  |   Time: @post.CreatedTime
-@*                        <button asp-action="DeleteMessage" asp-route-messageId="@post." type="submit" class="btn btn-danger float-right">
-                                Delete
-                        </button>*@
+                        <button asp-action="DeletePost" 
+                                asp-all-route-data='new Dictionary<string, string> { { "postId", @post.Id.ToString() }, { "themeId", @Model.Theme.Id.ToString() } }'
+                                type="submit" class="btn btn-danger float-right">
+                            @*asp-route-postId="@post.Id" asp- asp-route-themeId="@Model.Theme.Id"*@
+                            Delete
+                        </button>
                     </div>
                 </form>
             </div>
@@ -30,6 +33,7 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPostModal">
         Add Post
     </button>
+    <a type="button" class="btn btn-danger" asp-action="DropPosts" asp-route-themeId="@Model.Theme.Id">Drop Posts</a>
 
     <!-- Modal -->
     <form asp-action="AddPost" asp-route-themeId="@Model.Theme.Id">

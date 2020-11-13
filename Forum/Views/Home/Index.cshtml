@@ -1,6 +1,6 @@
-﻿@model HomeViewModel
+﻿@model IQueryable<Theme>
 
-@foreach (Theme theme in Model.themes) {
+@foreach (Theme theme in Model) {
     <div class="list-group m-2">
         <a asp-controller="Thread" asp-action="Posts" asp-route-Id="@theme.Id" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
@@ -31,50 +31,10 @@
 }
 
 <div class="text-center m-3">
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMessageModal">
-        Add Post
-    </button>
-    <a asp-action="DropPosts" type="button" class="btn btn-danger">Drop Posts</a>
-    <!-- Modal -->
-    <form asp-action="AddPost">
-        <div class="modal fade" id="addMessageModal" tabindex="-1" aria-labelledby="addMessageModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addMessageModal">Post new message</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <label>Post</label>
-                        <textarea asp-for="post.Content" class="form-control" rows="5"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Post</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+    <a asp-action="AddPosts" type="button" class="btn btn-success">
+        Add Posts
+    </a>
+    <a asp-action="DropThemes" type="button" class="btn btn-danger">
+    Drop Themes
+    </a>
 </div>
-
-
-
-@*@foreach (string post in Model.Themes) {
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">@post</h5>
-                    <small>
-                        Posts:
-                        <span class="badge badge-primary badge-pill">@Model.Posts.Where(p => p.theme == post).Count()</span>
-                    </small>
-                </div>
-                <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                <small>Last post: @Model.Posts.Where(p => p.theme == post).Select(p => p.createdTime).OrderByDescending(p => p).FirstOrDefault()</small>
-            </a>
-        </div>
-    }*@

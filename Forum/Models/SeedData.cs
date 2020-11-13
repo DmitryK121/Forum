@@ -12,15 +12,6 @@ namespace Forum.Models {
             ApplicationDbContext context = app.ApplicationServices
                 .GetRequiredService<ApplicationDbContext>();
             context.Database.Migrate();
-            if (!context.Messages.Any()) {
-                context.Messages.AddRange(
-                new Message { content = "SomeContent1", createdTime = DateTime.Now, userId = 0 },
-                new Message { content = "SomeContent2", createdTime = DateTime.Now, userId = 1 },
-                new Message { content = "SomeContent3", createdTime = DateTime.Now, userId = 2 },
-                new Message { content = "SomeContent4", createdTime = DateTime.Now, userId = 3 }
-                );
-                context.SaveChanges();
-            }
 
             if (!context.Themes.Any()) {
 /*                context.Themes.AddRange(

@@ -2,37 +2,30 @@
 using Forum.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using Forum.Infrastructure;
 using System.Collections.Generic;
 using System;
 
 namespace Forum.Controllers {
     public class HomeController : Controller {
-        private IMessageRepository repository;
-        private IThemeRepository themeRepository;
-        public HomeController(IMessageRepository repo, IThemeRepository tRepo) {
-            repository = repo;
-            themeRepository = tRepo;
-        }
-        public IActionResult Index() => View(new HomeViewModel { 
-            themes = themeRepository.Themes.OrderBy(p => p.Id)/*,
-            post = themeRepository.Themes.OrderBy(p => p.Id).FirstOrDefault().Posts.OrderByDescending(p => p.CreatedTime).FirstOrDefault()*/ });
+        private IThemeRepository repository;
+        public HomeController(IThemeRepository tRepo) => repository = tRepo;
+        public IActionResult Index() => View(repository.Themes.OrderBy(p => p.Id));
         public IActionResult ThemePosts() {
-            //themeRepository.Themes.FirstOrDefault().Posts.Add(new Post { content = "content", createdTime = DateTime.Now, userId = 0 });
-            //return View(themeRepository.Themes.FirstOrDefault().Posts);
-            return View(themeRepository.Themes.FirstOrDefault().Posts);
+            return View(repository.Themes.FirstOrDefault().Posts);
         }
-        public IActionResult AddPost(Post post) {
-            themeRepository.AddPost(post, themeRepository.Themes.FirstOrDefault().Id);
+        public IActionResult AddPosts() {
+            for (int i = 0; i < 100; i++) {
+                repository.AddPost(
+                    new Post { Content = "Generated content" + i, CreatedTime = DateTime.Now, UserId = i},
+                        new Random().Next(repository.Themes.OrderBy(p => p.Id).FirstOrDefault().Id, 
+                            repository.Themes.OrderByDescending(p => p.Id).FirstOrDefault().Id + 1));
+            }
             return RedirectToAction("Index");
         }
         public IActionResult CleanPage() => View();
-        public IActionResult DropPosts() {
-            themeRepository.DropPosts();
+        public IActionResult DropThemes() {
+            repository.DropThemes();
             return RedirectToAction("Index");
         }
     }
 }
-
-//repository.Messages.Select(p => p.Theme).Where(p => p.Length > 0).Distinct()
-//Themes = repository.Messages.Select(p => p.Theme).Where(p => p.Length > 0).Distinct(),

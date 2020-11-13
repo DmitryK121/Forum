@@ -17,7 +17,6 @@ namespace Forum {
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration["Data:ForumMessages:ConnectionString"]));
 
-            services.AddTransient<IMessageRepository, EFMessageRepository>();
             services.AddTransient<IThemeRepository, EFThemeRepository>();
             services.AddMvc();
         }

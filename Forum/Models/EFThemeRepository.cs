@@ -14,18 +14,31 @@ namespace Forum.Models {
         public void DeleteTheme(int id) {
 
         }
-        public void AddPost(Post post, int themeId) {
-            Post dbPost = new Post { Content = post.Content, CreatedTime = DateTime.Now, UserId = 0 };
-            //context.Themes.FirstOrDefault(p => p.Id == themeId).Posts.Add(dbPost);
-            context.Themes.Include(p => p.Posts).FirstOrDefault(p => p.Id == themeId).Posts.Add(dbPost);
-            context.SaveChanges();
-        }
-        public void DropPosts() {
+        public void DropThemes() {
             /*foreach (Theme theme in context.Themes.Include(p => p.Posts)) {
                 context.Themes.Remove(theme);
             }*/
             context.Themes.RemoveRange(Themes.Take(context.Themes.Count()));
             context.SaveChanges();
+        }
+
+        public void AddPost(Post post, int themeId) {
+            Post dbPost = new Post { Content = post.Content, CreatedTime = DateTime.Now, UserId = 0 };
+            context.Themes.Include(p => p.Posts).FirstOrDefault(p => p.Id == themeId).Posts.Add(dbPost);
+            context.SaveChanges();
+        }
+        public void DeletePost(int postId, int themeId) {
+            Post dbEntry = context.Themes.Include(p => p.Posts).FirstOrDefault(p => p.Id == themeId).Posts.FirstOrDefault(p => p.Id == postId);
+            if (dbEntry != null) {
+                context.Themes.FirstOrDefault(p => p.Id == themeId).Posts.Remove(dbEntry);
+                context.SaveChanges();
+            }
+        }
+        public void DropPosts(int themeId) {
+            if (context.Themes.Any(p => p.Id == themeId)) {
+                context.Themes.Include(p => p.Posts).FirstOrDefault(p => p.Id == themeId).Posts.Clear();
+                context.SaveChanges();
+            }
         }
     }
 }

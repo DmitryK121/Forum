@@ -8,7 +8,10 @@ namespace Forum.Models {
         IQueryable<Theme> Themes { get; }
         public void AddTheme(string name);
         public void DeleteTheme(int themeId);
+        public void DropThemes();
+
         public void AddPost(Post post, int themeId);
-        public void DropPosts();
+        public void DeletePost(int postId, int themeId);
+        public void DropPosts(int themeId);
     }
 }
