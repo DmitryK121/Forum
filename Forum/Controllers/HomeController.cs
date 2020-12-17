@@ -9,7 +9,7 @@ namespace Forum.Controllers {
     public class HomeController : Controller {
         private IThemeRepository repository;
         public HomeController(IThemeRepository tRepo) => repository = tRepo;
-        public IActionResult Index() => View(repository.Themes.OrderBy(p => p.Id));
+        public IActionResult Index() => View(new HomeViewModel { Themes = repository.Themes.OrderBy(p => p.Id) } );
         public IActionResult ThemePosts() {
             return View(repository.Themes.FirstOrDefault().Posts);
         }
@@ -20,6 +20,10 @@ namespace Forum.Controllers {
                         new Random().Next(repository.Themes.OrderBy(p => p.Id).FirstOrDefault().Id, 
                             repository.Themes.OrderByDescending(p => p.Id).FirstOrDefault().Id + 1));
             }
+            return RedirectToAction("Index");
+        }
+        public IActionResult AddTheme(string themeName) {
+            repository.AddTheme(themeName);
             return RedirectToAction("Index");
         }
         public IActionResult CleanPage() => View();

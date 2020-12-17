@@ -8,8 +8,9 @@ namespace Forum.Models {
         public EFThemeRepository(ApplicationDbContext ctx) => context = ctx;
         public IQueryable<Theme> Themes => context.Themes
             .Include(p => p.Posts);
-        public void AddTheme(string theme) {
-
+        public void AddTheme(string themeName) {
+            context.Themes.Add(new Theme { Name = themeName });
+            context.SaveChanges();
         }
         public void DeleteTheme(int id) {
 

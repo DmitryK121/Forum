@@ -8,22 +8,22 @@ using Forum.Models.ViewModels;
 
 namespace Forum.Controllers {
     public class ThreadController : Controller {
-        public IThemeRepository themeRepository;
-        public ThreadController(IThemeRepository repo) => themeRepository = repo;
-        public IActionResult Posts(int Id) => View(new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == Id) });
+        public IThemeRepository repository;
+        public ThreadController(IThemeRepository repo) => repository = repo;
+        public IActionResult Posts(int Id) => View(new PostsViewModel { Theme = repository.Themes.First(p => p.Id == Id) });
 
         public IActionResult AddPost(Post newPost, int themeId) {
-            themeRepository.AddPost(newPost, themeId);
+            repository.AddPost(newPost, themeId);
             //return RedirectToAction(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
-            return View(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
+            return View(nameof(Posts), new PostsViewModel { Theme = repository.Themes.First(p => p.Id == themeId) });
         }
         public IActionResult DeletePost(int postId, int themeId) {
-            themeRepository.DeletePost(postId, themeId);
-            return View(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
+            repository.DeletePost(postId, themeId);
+            return View(nameof(Posts), new PostsViewModel { Theme = repository.Themes.First(p => p.Id == themeId) });
         }
         public IActionResult DropPosts(int themeId) {
-            themeRepository.DropPosts(themeId);
-            return View(nameof(Posts), new PostsViewModel { Theme = themeRepository.Themes.First(p => p.Id == themeId) });
+            repository.DropPosts(themeId);
+            return View(nameof(Posts), new PostsViewModel { Theme = repository.Themes.First(p => p.Id == themeId) });
         }
     }
 }

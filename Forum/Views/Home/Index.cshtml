@@ -1,6 +1,6 @@
-﻿@model IQueryable<Theme>
+﻿@model HomeViewModel
 
-@foreach (Theme theme in Model) {
+@foreach (Theme theme in Model.Themes) {
     <div class="list-group m-2">
         <a asp-controller="Thread" asp-action="Posts" asp-route-Id="@theme.Id" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
@@ -29,12 +29,38 @@
         </a>
     </div>
 }
-
 <div class="text-center m-3">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addThemeModal">
+        Add Theme
+    </button>
     <a asp-action="AddPosts" type="button" class="btn btn-success">
         Add Posts
     </a>
     <a asp-action="DropThemes" type="button" class="btn btn-danger">
-    Drop Themes
+        Drop Themes
     </a>
+
+    <!-- Modal -->
+    <form asp-action="AddTheme">
+        <div class="modal fade" id="addThemeModal" tabindex="-1" aria-labelledby="addThemeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addThemeModal">Post new message2</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Theme</label>
+                        <textarea asp-for="@Model.themeName" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
